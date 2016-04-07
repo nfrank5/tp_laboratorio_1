@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1459871947 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_1_Cascara/main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"funciones.h"
+
+1459871355 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_1_Cascara/funciones.h
+
+1459871883 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_1_Cascara/funciones.c
+	<stdio.h>
+	<stdlib.h>
+

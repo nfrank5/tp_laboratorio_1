@@ -3,15 +3,11 @@
 #include "funciones.h"
 #include "../../miLib/misFunciones.h"
 #include <string.h>
-
-
-
-
-
 /**
  * Obtiene el primer indice libre del array.
- * /param listint obtenerEspacioLibre(EPersona lista[])a el array se pasa como parametro.
- * /return el primer indice disponible
+ * /param el array de la estructura
+ * /param puntero para indicar el indice del espacio libre
+ * /return 1 si hay espacio libre -1 si no lo hay
  */
 int obtenerEspacioLibre(EPersona lista[],int*aux)
 {
@@ -39,34 +35,31 @@ int obtenerEspacioLibre(EPersona lista[],int*aux)
 
 }
 
-
 /** \brief Agregar una persona
  *
  * \param el array de la estructura
  * \param el puntero del indice del array
- * \return
+ * \return 1 si se agrego la persona -1 si el DNI es duplicado
  *
  */
 int agregarPersona(EPersona lista[],int*aux)
 {
     system("clear");
     while(getInt(&lista[*aux].edad,"Ingrese edad: ","Error, intente nuevamente[0-110]\n",0,110)==-1);
-    while(getUnsignedLongInt(&lista[*aux].dni,"Ingrese dni: ","Error, intente nuevamente[1-900]\n",1,60000000)==-1);
+    while(getUnsignedLongInt(&lista[*aux].dni,"Ingrese dni: ","Error, intente nuevamente [10Millones-60Millones]\n",10000000,60000000)==-1);
     while(getString(lista[*aux].nombre,"Ingrese su nombre: ","Error, intente nuevamente",1,50)==-1);
     lista[*aux].estado=1;
 
     return 1;
 }
 
-
-/** \brief
+/** \brief busca a una persona por el DNI
  *
- * \param
- * \param
- * \return
+ * \param El array de la estructura
+ * \param un puntero para retornar el indica de la persona
+ * \return 1 encontrado -1 no se encontro
  *
  */
-
 int buscarPorDni(EPersona lista[],int*aux)
 {
     unsigned long int auxDNI;
@@ -91,6 +84,12 @@ int buscarPorDni(EPersona lista[],int*aux)
     return -1;
 }
 
+/** \brief Imprimi una lista de todas la personas ordenado por su nombre
+ *
+ * \param el array de la estructura
+ * \return 1
+ *
+ */
 int imprimirLista(EPersona persona[])
 {
     int i,j;
@@ -108,20 +107,26 @@ int imprimirLista(EPersona persona[])
         }
     }
     system("clear");
-    printf("DNI\t\tNombre\t\tEdad\n");
+    printf("Edad\t\tDNI\t\tNombre\n");
     for(i=0;i<MAXIMO;i++)
     {
         if(persona[i].estado==1)
         {
-            printf("%lu\t\t",persona[i].dni);
-            printf("%s\t\t",persona[i].nombre);
-            printf("%d\n",persona[i].edad);
+            printf("%d\t\t",persona[i].edad);
+            printf("%lu\t",persona[i].dni);
+            printf("%s\n",persona[i].nombre);
         }
     }
 
     return 1;
 }
 
+/** \brief inicializa el estado en todos los indices del array de la estructura
+ *
+ * \param el array de la estructura
+ * \return 1
+ *
+ */
 int inicializarEstado(EPersona persona[])
 {
     int i;
@@ -132,67 +137,103 @@ int inicializarEstado(EPersona persona[])
     return 1;
 }
 
-
+/** \brief borra a la persona seleccionada por el usuario
+ *
+ * \param el array de la estructura
+ * \param un puntero con el indice de la persona elegida para ser borrado
+ * \return 0 si fue eliminada -1 si no lo fue
+ *
+ */
 int borrarPersona(EPersona lista[],int*aux)
 {
     char auxBorrado='n';
-    printf("¿Quiere eliminar a %s?(s/n)\n",lista[*aux].nombre);
-    scanf(" %c",&auxBorrado);
-    if(auxBorrado=='s')
+    if(lista[*aux].estado==1)
     {
-        lista[*aux].estado=0;
-        printf("Persona eliminada\n");
+        printf("Usted va a eliminar a %s.\n",lista[*aux].nombre);
+        validarS_N(&auxBorrado);
+        if(auxBorrado=='s')
+        {
+            lista[*aux].estado=0;
+            printf("Persona eliminada\n");
+            return 0;
+        }
     }
-    return 1;
+    else
+    {
+        printf("Error, no existe la persona\n");
+    }
+    return -1;
 }
 
-
+/** \brief imprime un grafico con un asterisco por persona en cada rango de edad
+ *
+ * \param el array de la estructura
+ * \return 1
+ *
+ */
 int imprimirGrafico(EPersona lista[])
 {
-    char grafico[MAXIMO-1][2];
-    //int z=(sizeof(char));
-    int i,j,contador18Menos=0,contador19A35=0,contador35Mas=0;
+    int i,j,banderaImprimir=0,contador18Menos=0,contador19A35=0,contador35Mas=0;
+    system("clear");
     for(i=0;i<MAXIMO;i++)
     {
-        if(lista[i].edad<=18)
+        if(lista[i].edad<=18&&lista[i].estado==1)
         {
             contador18Menos++;
-
         }
-        else if(lista[i].edad>18&&lista[i].edad<=35)
+        else if(lista[i].edad>18&&lista[i].edad<=35&&lista[i].estado==1)
         {
             contador19A35++;
         }
-        else if(lista[i].edad>35)
+        else if(lista[i].edad>35&&lista[i].estado==1)
         {
             contador35Mas++;
         }
-
-
     }
-    for(i=0;i<2;i++)
+    for(j=0;j<MAXIMO;j++)
     {
-        for(j=0;j<MAXIMO;j++)
+        for(i=0;i<=2;i++)
         {
-            if(j>(MAXIMO-contador18Menos))
+            if(i==0&&j>=(MAXIMO-contador18Menos))
             {
-                grafico[i][j]='*';
+                printf(" * \t");
+                banderaImprimir=1;
             }
+            else if(i==1&&j>=(MAXIMO-contador19A35))
+            {
+                if(banderaImprimir==0)
+                {
+                        printf("\t * \t");
+                        banderaImprimir=1;
+                }
+                else
+                {
+                    printf(" * \t");
+                }
+            }
+            else if(i==2&&j>=(MAXIMO-contador35Mas))
+            {
+                if(banderaImprimir==0)
+                {
+                        printf("\t\t * \t\n");
+                        banderaImprimir=1;
+                }
+                else
+                {
+                    printf(" * \t");
+                }
+            }
+            else if((i==0||i==1)&&banderaImprimir==1)
+            {
+                printf("   \t");
+            }
+            else if(i==2&&banderaImprimir==1)
+            {
+                printf("   \n");
+            }
+
         }
     }
-
-    for(i=0;i<2;i++)
-    {
-        for(j=0;j<MAXIMO;j++)
-        {
-            printf("%c\t",grafico[i][j]);
-
-
-        }
-
-    }
-
+    printf("<18\t19-35\t>35\t\n");
     return 1;
-
-
 }

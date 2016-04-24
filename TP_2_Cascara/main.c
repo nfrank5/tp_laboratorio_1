@@ -4,6 +4,8 @@
 #include <string.h>
 #include "../../miLib/misFunciones.h"
 
+//Falta ver como evitar que se ingrese dni duplicado y ver que al dar de baja una persona quede un resavio en ningun lado.
+
 int main()
 {
     char seguir='s';
@@ -13,7 +15,7 @@ int main()
     inicializarEstado(persona);
     while(seguir=='s')
     {
-        crearMenu(&opcion,"1- Agregar persona\n2- Borrar persona\n3- Imprimir lista ordenada por nombre \n4- Imprimir grafico de edades\n5- Salir\n\n",1,5);
+        crearMenu(&opcion,"1- Agregar persona\n2- Borrar persona\n3- Imprimir lista ordenada por nombre \n4- Imprimir grafico de edades\n5- Salir\n",1,5);
         switch(opcion)
         {
             case 1:
@@ -39,6 +41,5 @@ int main()
                 break;
         }
     }
-
     return 0;
 }

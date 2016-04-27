@@ -3,6 +3,7 @@
 #include "funciones.h"
 #include "../../miLib/misFunciones.h"
 #include <string.h>
+#include <ctype.h>
 /**
  * Obtiene el primer indice libre del array.
  * /param el array de la estructura
@@ -45,9 +46,24 @@ int obtenerEspacioLibre(EPersona lista[],int*aux)
 int agregarPersona(EPersona lista[],int*aux)
 {
     system("clear");
+    int i;
+    unsigned long int auxDni;
     while(getInt(&lista[*aux].edad,"Ingrese edad: ","Error, intente nuevamente[0-110]\n",0,110)==-1);
-    while(getUnsignedLongInt(&lista[*aux].dni,"Ingrese dni: ","Error, intente nuevamente [10Millones-60Millones]\n",10000000,60000000)==-1);
-    while(getString(lista[*aux].nombre,"Ingrese su nombre: ","Error, intente nuevamente",1,50)==-1);
+    while(getUnsignedLongInt(&auxDni,"Ingrese dni: ","Error, intente nuevamente [10Millones-60Millones]\n",10000000,99000000)==-1);
+    for(i=0;i<MAXIMO;i++)
+    {
+        if(auxDni==lista[i].dni&&lista[i].estado==1)
+        {
+            printf("DNI duplicado\n");
+            return -1;
+        }
+        else
+        {
+            lista[*aux].dni=auxDni;
+        }
+
+    }
+    while(getString(lista[*aux].nombre,"Ingrese su nombre: ","Error, intente nuevamente",1,51)==-1);
     lista[*aux].estado=1;
 
     return 1;
@@ -68,7 +84,7 @@ int buscarPorDni(EPersona lista[],int*aux)
     scanf("%lu",&auxDNI);
     for(i=0;i<MAXIMO;i++)
     {
-        if(auxDNI==lista[i].dni)
+        if((auxDNI==lista[i].dni)&&lista[i].estado==1)
         {
             flagEncontrado=1;
             *aux=i;
@@ -92,18 +108,35 @@ int buscarPorDni(EPersona lista[],int*aux)
  */
 int imprimirLista(EPersona persona[])
 {
-    int i,j;
+    int i,j,t,largo1,largo2;
+    char auxNombreUno[51],auxNombreDos[51];
     EPersona auxPersona;
     for(i=0;i<MAXIMO-1;i++)
     {
         for(j=i+1;j<MAXIMO;j++)
         {
-            if(strcmp(persona[i].nombre,persona[j].nombre)>0)
+            if(persona[i].estado==1&&persona[j].estado==1)
             {
-                auxPersona=persona[i];
-                persona[i]=persona[j];
-                persona[j]=auxPersona;
+                strcpy(auxNombreUno,persona[i].nombre);
+                strcpy(auxNombreDos,persona[j].nombre);
+                largo1=strlen(auxNombreUno);
+                largo2=strlen(auxNombreDos);
+                for(t=0;t<largo1; t++)
+                {
+                    auxNombreUno[t] = tolower(auxNombreUno[t]);
+                }
+                for(t=0;t<largo2; t++)
+                {
+                    auxNombreDos[t] = tolower(auxNombreDos[t]);
+                }
+                if(strcmp(auxNombreUno,auxNombreDos)>0)
+                {
+                    auxPersona=persona[i];
+                    persona[i]=persona[j];
+                    persona[j]=auxPersona;
+                }
             }
+
         }
     }
     system("clear");
@@ -173,11 +206,11 @@ int borrarPersona(EPersona lista[],int*aux)
  */
 int imprimirGrafico(EPersona lista[])
 {
-    int i,j,banderaImprimir=0,contador18Menos=0,contador19A35=0,contador35Mas=0;
+    int i,j,contador18Menos=0,contador19A35=0,contador35Mas=0;
     system("clear");
-    for(i=0;i<MAXIMO;i++)
+    for(i=0;i<MAXIMO;i++) //creo contadores de cada rango de edad
     {
-        if(lista[i].edad<=18&&lista[i].estado==1)
+        if(lista[i].edad<=18&&lista[i].edad>=0&&lista[i].estado==1)
         {
             contador18Menos++;
         }
@@ -185,55 +218,52 @@ int imprimirGrafico(EPersona lista[])
         {
             contador19A35++;
         }
-        else if(lista[i].edad>35&&lista[i].estado==1)
+        else if(lista[i].edad>35&&lista[i].edad<=110&&lista[i].estado==1)
         {
             contador35Mas++;
         }
     }
-    for(j=0;j<MAXIMO;j++)
+    for(i=0;i<MAXIMO;i++) //imprimo
     {
-        for(i=0;i<=2;i++)
+        for(j=0;j<3;j++)
         {
-            if(i==0&&j>=(MAXIMO-contador18Menos))
+            if(j==0)
             {
-                printf(" * \t");
-                banderaImprimir=1;
-            }
-            else if(i==1&&j>=(MAXIMO-contador19A35))
-            {
-                if(banderaImprimir==0)
-                {
-                        printf("\t * \t");
-                        banderaImprimir=1;
-                }
-                else
+                if(i>=(MAXIMO-contador18Menos))
                 {
                     printf(" * \t");
                 }
-            }
-            else if(i==2&&j>=(MAXIMO-contador35Mas))
-            {
-                if(banderaImprimir==0)
-                {
-                        printf("\t\t * \t\n");
-                        banderaImprimir=1;
-                }
                 else
+                {
+                    printf("   \t");
+                }
+            }
+            if(j==1)
+            {
+                if(i>=(MAXIMO-contador19A35))
                 {
                     printf(" * \t");
                 }
-            }
-            else if((i==0||i==1)&&banderaImprimir==1)
-            {
-                printf("   \t");
-            }
-            else if(i==2&&banderaImprimir==1)
-            {
-                printf("   \n");
-            }
+                else
+                {
+                    printf("   \t");
+                }
 
+            }
+            if(j==2)
+            {
+                if(i>=(MAXIMO-contador35Mas))
+                {
+                    printf(" * \n");
+                }
+                else
+                {
+                    printf("   \n");
+                }
+            }
         }
     }
+
     printf("<18\t19-35\t>35\t\n");
     return 1;
 }

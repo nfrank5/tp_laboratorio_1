@@ -1,6 +1,6 @@
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
-#define MAXIMO 20
+#define MAXIMO 5
 typedef struct {
 
     char nombre[50];

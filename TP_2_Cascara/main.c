@@ -4,8 +4,6 @@
 #include <string.h>
 #include "../../miLib/misFunciones.h"
 
-//Falta ver como evitar que se ingrese dni duplicado y ver que al dar de baja una persona quede un resavio en ningun lado.
-
 int main()
 {
     char seguir='s';

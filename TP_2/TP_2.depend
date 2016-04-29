@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1461957653 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_2/funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funciones.h"
+	"../miLib/misFunciones.h"
+
+1461952010 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_2/funciones.h
+
+1461959249 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/miLib/misFunciones.h
+
+1461959286 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_2/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"../miLib/misFunciones.h"
+	"funciones.h"
+
+1461959161 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/miLib/misFunciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<ctype.h>
+

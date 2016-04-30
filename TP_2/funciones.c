@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "funciones.h"
-#include "../miLib/misFunciones.h"
+#include "miLib/misFunciones.h"
 
 /** \ Obtiene el primer indice libre del array.
  *

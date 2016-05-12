@@ -7,11 +7,11 @@
 /** \brief Funcion para tomar un entero del usuario
  *
  * \param puntero para el retorno del entero ingresado
- * \param Mensaje para pedirle al usuario que ingrese un número
+ * \param Mensaje para pedirle al usuario que ingrese un numero
  * \param Mensaje de error
- * \param número minimo a aceptar
- * \param número maximo a aceptar
- * \return 0 si se ingreso el número correctamento -1 si hubo un error
+ * \param numero minimo a aceptar
+ * \param numero maximo a aceptar
+ * \return 0 si se ingreso el numero correctamento -1 si hubo un error
  *
  */
 int getInt(int* retorno, char msg[], char errormsg[], int minimo,int maximo)
@@ -34,14 +34,14 @@ int getInt(int* retorno, char msg[], char errormsg[], int minimo,int maximo)
 
 }
 
-/** \brief Funcion para tomar un número  float del usuario
+/** \brief Funcion para tomar un numero  float del usuario
  *
  * \param puntero para el retorno del float ingresado
- * \param Mensaje para pedirle al usuario que ingrese un número
+ * \param Mensaje para pedirle al usuario que ingrese un numero
  * \param Mensaje de error
- * \param número minimo a aceptar
- * \param número maximo a aceptar
- * \return 0 si se ingreso el número correctamento -1 si hubo un error
+ * \param numero minimo a aceptar
+ * \param numero maximo a aceptar
+ * \return 0 si se ingreso el numero correctamento -1 si hubo un error
  *
  */
 int getFloat(float* retorno, char msg[], char errormsg[], int minimo,int maximo)
@@ -125,7 +125,7 @@ int validarS_N(char* input)
 {
     char*respuesta;
     respuesta=input;
-    while(getChar(respuesta,"¿Continuar S/N?\n","Error, vuelva a ingresar",'N','S')==-1);
+    while(getChar(respuesta,"�Continuar S/N?\n","Error, vuelva a ingresar",'N','S')==-1);
     return 0;
 }
 
@@ -133,8 +133,8 @@ int validarS_N(char* input)
  *
  * \param retorno por puntero
  * \param El texto del menu
- * \param número de opción mínimo
- * \param número de opción máximo
+ * \param numero de opcion minimo
+ * \param numero de opcion maximo
  * \return retorna un 0
  *
  */
@@ -143,7 +143,8 @@ int crearMenu(int* retorno,char items[], int desde, int hasta)
     do
     {
         printf("%s", items);
-        getInt(retorno,"Ingrese una opción","Error, intente nuevamente\n", desde,hasta);
+        *retorno=0;
+        getInt(retorno,"Ingrese una opcion","Error, intente nuevamente\n", desde,hasta);
     }while(*retorno<desde||*retorno>hasta);
     return 0;
 }
@@ -151,11 +152,11 @@ int crearMenu(int* retorno,char items[], int desde, int hasta)
 /** \brief Funcion para tomar un entero largo positivo del usuario
  *
  * \param puntero para el retorno del entero ingresado
- * \param Mensaje para pedirle al usuario que ingrese un número
+ * \param Mensaje para pedirle al usuario que ingrese un numero
  * \param Mensaje de error
- * \param número minimo a aceptar
- * \param número maximo a aceptar
- * \return 0 si se ingreso el número correctamento -1 si hubo un error
+ * \param numero minimo a aceptar
+ * \param numero maximo a aceptar
+ * \return 0 si se ingreso el numero correctamento -1 si hubo un error
  *
  */
 int getUnsignedLongInt(unsigned long int* retorno, char msg[], char errormsg[], int minimo,int maximo)
@@ -180,9 +181,8 @@ int getUnsignedLongInt(unsigned long int* retorno, char msg[], char errormsg[], 
 
 
 
-//No usado en el TP 2
 
-/** \brief verificar si lo que se ingreso es un número
+/** \brief verificar si lo que se ingreso es un numero
  *
  * \param str Array con la cadena a ser analizada
  * \return 1 si es numerico 0 si no lo es
@@ -244,7 +244,7 @@ int esTelefono(char str[])
         }
 		i++;
 	}
-	if(contadorGuiones==1) //Un solo guión
+	if(contadorGuiones==1) //Un solo guion
     {
         return 1;
     }
@@ -270,3 +270,4 @@ int esAlfanumerico(char str[])
 	}
 	return 1;
 }
+

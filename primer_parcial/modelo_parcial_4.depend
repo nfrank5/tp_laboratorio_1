@@ -1,0 +1,29 @@
+# depslib dependency file v1.0
+1462901050 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/guia_de_ejercicios/Modelo de parcial/modelo_de_parcial_4/modelo_parcial_4/funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funciones.h"
+	"utn.h"
+
+1462385713 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/guia_de_ejercicios/Modelo de parcial/modelo_de_parcial_4/modelo_parcial_4/utn.h
+
+1462798549 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/guia_de_ejercicios/Modelo de parcial/modelo_de_parcial_4/modelo_parcial_4/funciones.h
+
+1463058530 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/guia_de_ejercicios/Modelo de parcial/modelo_de_parcial_4/modelo_parcial_4/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utn.h"
+	"funciones.h"
+
+1462657303 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/guia_de_ejercicios/Modelo de parcial/modelo_de_parcial_4/modelo_parcial_4/utn.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<ctype.h>
+
+1461968907 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/miLib/misFunciones.h
+

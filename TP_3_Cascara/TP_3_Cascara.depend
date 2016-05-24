@@ -1,0 +1,26 @@
+# depslib dependency file v1.0
+1463414159 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_3_Cascara/utn.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<ctype.h>
+
+1464101972 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_3_Cascara/funciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"funciones.h"
+	"utn.h"
+
+1464100187 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_3_Cascara/funciones.h
+
+1462385713 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_3_Cascara/utn.h
+
+1464101994 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_3_Cascara/main.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+	"utn.h"
+

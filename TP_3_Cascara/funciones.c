@@ -85,32 +85,35 @@ int borrarPelicula(EMovie * movie)
     int flagEncontrado=0;
     char auxSearchMovie[51];
     FILE * auxPeliculas;
-    if((auxPeliculas = fopen("peliculasArchivo.dat","r+b"))==NULL)
+    if(movie!=NULL)
     {
-        printf("El archivo no puede ser abierto");
-        exit(1);
-    }
-    while(getString(auxSearchMovie,"Ingrese el titulo de la pelicula: ","Error, intente nuevamente",1,51)==-1);
-    rewind(auxPeliculas);
-    while(fread(movie,sizeof(EMovie),1,auxPeliculas)!=0)
-    {
-        if(movie->status==1)
+        if((auxPeliculas = fopen("peliculasArchivo.dat","r+b"))==NULL)
         {
-            if(strcmp(movie->titulo,auxSearchMovie)==0)
-            {
-                movie->status=0;
-                fseek(auxPeliculas,-sizeof(EMovie),SEEK_CUR);
-                fwrite(movie,sizeof(EMovie),1,auxPeliculas);
-                printf("Pelicula eliminada\n");
-                flagEncontrado=1;
-                retorno=0;
-            }
-
+            printf("El archivo no puede ser abierto");
+            exit(1);
         }
-    }
-    if(flagEncontrado==0)
-    {
-        printf("La pelicula no existe\n");
+        while(getString(auxSearchMovie,"Ingrese el titulo de la pelicula: ","Error, intente nuevamente",1,51)==-1);
+        rewind(auxPeliculas);
+        while(fread(movie,sizeof(EMovie),1,auxPeliculas)!=0)
+        {
+            if(movie->status==1)
+            {
+                if(strcmp(movie->titulo,auxSearchMovie)==0)
+                {
+                    movie->status=0;
+                    fseek(auxPeliculas,-sizeof(EMovie),SEEK_CUR);
+                    fwrite(movie,sizeof(EMovie),1,auxPeliculas);
+                    printf("Pelicula eliminada\n");
+                    flagEncontrado=1;
+                    retorno=0;
+                }
+
+            }
+        }
+        if(flagEncontrado==0)
+        {
+            printf("La pelicula no existe\n");
+        }
     }
     return retorno;
 }
@@ -126,71 +129,74 @@ void generarPagina(EMovie * movie,char nombre[])
     system("@cls||clear");
     char ch;
     FILE * auxPeliculas,* HTML,* parteUno,* parteDos;
-    if((auxPeliculas = fopen("peliculasArchivo.dat","r+b"))==NULL)
+    if(movie!=NULL)
     {
-        printf("El archivo no puede ser abierto");
-        exit(1);
-    }
-    if((HTML = fopen(nombre,"w"))==NULL)
-    {
-        printf("El archivo no puede ser abierto");
-        exit(1);
-    }
-    if((parteUno = fopen("parte_uno.txt","r+"))==NULL)
-    {
-        printf("El archivo no puede ser abierto");
-        exit(1);
-    }
-    if((parteDos = fopen("parte_dos.txt","r+"))==NULL)
-    {
-        printf("El archivo no puede ser abierto");
-        exit(1);
-    }
-    while (1)
-    {
-        ch = fgetc(parteUno);
-        if (ch == EOF)
+        if((auxPeliculas = fopen("peliculasArchivo.dat","r+b"))==NULL)
         {
-            break;
+            printf("El archivo no puede ser abierto");
+            exit(1);
         }
-        else
+        if((HTML = fopen(nombre,"w"))==NULL)
         {
-            putc(ch, HTML);
+            printf("El archivo no puede ser abierto");
+            exit(1);
         }
-    }
-    while(fread(movie,sizeof(EMovie),1,auxPeliculas)!=0)
-    {
-        if(movie->status==1)
+        if((parteUno = fopen("parte_uno.txt","r+"))==NULL)
         {
-            fprintf(HTML,"<article class='col-md-4 article-intro'><a href='#'>");
-            fprintf(HTML,"<img class='img-responsive img-rounded' src='%s' alt=''>\n",movie->linkImagen);
-            fprintf(HTML,"</a><h3><a href='#'>%s</a>",movie->titulo);
-            fprintf(HTML,"</h3><ul><li>Género:%s</li>",movie->genero);
-            fprintf(HTML,"<li>Puntaje:%d</li>",movie->puntaje);
-            fprintf(HTML,"<li>Duración:%d</li></ul>",movie->duracion);
-            fprintf(HTML,"<p>%s</p></article>",movie->descripcion);
+            printf("El archivo no puede ser abierto");
+            exit(1);
         }
-    }
+        if((parteDos = fopen("parte_dos.txt","r+"))==NULL)
+        {
+            printf("El archivo no puede ser abierto");
+            exit(1);
+        }
+        while (1)
+        {
+            ch = fgetc(parteUno);
+            if (ch == EOF)
+            {
+                break;
+            }
+            else
+            {
+                putc(ch, HTML);
+            }
+        }
+        while(fread(movie,sizeof(EMovie),1,auxPeliculas)!=0)
+        {
+            if(movie->status==1)
+            {
+                fprintf(HTML,"<article class='col-md-4 article-intro'><a href='#'>");
+                fprintf(HTML,"<img class='img-responsive img-rounded' src='%s' alt=''>\n",movie->linkImagen);
+                fprintf(HTML,"</a><h3><a href='#'>%s</a>",movie->titulo);
+                fprintf(HTML,"</h3><ul><li>Género:%s</li>",movie->genero);
+                fprintf(HTML,"<li>Puntaje:%d</li>",movie->puntaje);
+                fprintf(HTML,"<li>Duración:%d</li></ul>",movie->duracion);
+                fprintf(HTML,"<p>%s</p></article>",movie->descripcion);
+            }
+        }
 
-    while (1)
-    {
-        ch = fgetc(parteDos);
-        if (ch == EOF)
+        while (1)
         {
-            break;
+            ch = fgetc(parteDos);
+            if (ch == EOF)
+            {
+                break;
+            }
+            else
+            {
+                putc(ch, HTML);
+            }
+        }
+        if(fclose(auxPeliculas)!=0||fclose(HTML)!=0||fclose(parteUno)!=0||fclose(parteDos)!=0)
+        {
+            printf("Hubo un error al cerrar los archivos\n");
         }
         else
         {
-            putc(ch, HTML);
+            printf("HTML generado con exito\n");
         }
-    }
-    if(fclose(auxPeliculas)!=0||fclose(HTML)!=0||fclose(parteUno)!=0||fclose(parteDos)!=0)
-    {
-        printf("Hubo un error al cerrar los archivos\n");
-    }
-    else
-    {
-        printf("HTML generado con exito\n");
     }
     return;
 }
@@ -211,59 +217,62 @@ int modificarPelicula(EMovie * movie)
     char continuar='s';
     char auxSearchMovie[51];
     FILE * auxPeliculas;
-    if((auxPeliculas = fopen("peliculasArchivo.dat","r+b"))==NULL)
+    if(movie!=NULL)
     {
-        printf("El archivo no puede ser abierto");
-        exit(1);
-    }
-    while(getString(auxSearchMovie,"Ingrese el titulo de la pelicula: ","Error, intente nuevamente",1,51)==-1);
-    rewind(auxPeliculas);
-    while(fread(movie,sizeof(EMovie),1,auxPeliculas)!=0)
-    {
-        if(movie->status==1)
+        if((auxPeliculas = fopen("peliculasArchivo.dat","r+b"))==NULL)
         {
-            if(strcmp(movie->titulo,auxSearchMovie)==0)
+            printf("El archivo no puede ser abierto");
+            exit(1);
+        }
+        while(getString(auxSearchMovie,"Ingrese el titulo de la pelicula: ","Error, intente nuevamente",1,51)==-1);
+        rewind(auxPeliculas);
+        while(fread(movie,sizeof(EMovie),1,auxPeliculas)!=0)
+        {
+            if(movie->status==1)
             {
-                flagSearch=1;
-                while(continuar=='s')
+                if(strcmp(movie->titulo,auxSearchMovie)==0)
                 {
-                    printf("¿Que desea modificar?\n");
-                    crearMenu(&opcion,"1-titulo\n2-genero\n3-duracion\n4-descripcion\n5-puntaje\n6-linkImagen\n7-salir\n",1,7);
-                    switch(opcion)
+                    flagSearch=1;
+                    while(continuar=='s')
                     {
-                        case 1:
-                            while(getString(movie->titulo,"Ingrese el titulo de la pelicula: ","Error, intente nuevamente",1,51)==-1);
-                            break;
-                        case 2:
-                             while(getString(movie->genero,"Ingrese el genero de la pelicula: ","Error, intente nuevamente",1,21)==-1);
-                             break;
-                        case 3:
-                            while(getInt(&movie->duracion,"Ingrese la duracion de la pelicula: ","Error, intente nuevamente[1-600]",1,600)==-1);
-                            break;
-                        case 4:
-                            while(getString(movie->descripcion,"Ingrese la descripcion de la pelicula: ","Error, intente nuevamente",1,512)==-1);
-                            break;
-                        case 5:
-                            while(getInt(&movie->puntaje,"Ingrese el puntaje de la pelicula: ","Error, intente nuevamente[1-100]",1,100)==-1);
-                            break;
-                        case 6:
-                            while(getString(movie->linkImagen,"Ingrese el link de la imagen de la pelicula: ","Error, intente nuevamente",1,151)==-1);
-                            break;
-                        case 7:
-                            continuar='n';
-                            break;
+                        printf("¿Que desea modificar?\n");
+                        crearMenu(&opcion,"1-titulo\n2-genero\n3-duracion\n4-descripcion\n5-puntaje\n6-linkImagen\n7-salir\n",1,7);
+                        switch(opcion)
+                        {
+                            case 1:
+                                while(getString(movie->titulo,"Ingrese el titulo de la pelicula: ","Error, intente nuevamente",1,51)==-1);
+                                break;
+                            case 2:
+                                 while(getString(movie->genero,"Ingrese el genero de la pelicula: ","Error, intente nuevamente",1,21)==-1);
+                                 break;
+                            case 3:
+                                while(getInt(&movie->duracion,"Ingrese la duracion de la pelicula: ","Error, intente nuevamente[1-600]",1,600)==-1);
+                                break;
+                            case 4:
+                                while(getString(movie->descripcion,"Ingrese la descripcion de la pelicula: ","Error, intente nuevamente",1,512)==-1);
+                                break;
+                            case 5:
+                                while(getInt(&movie->puntaje,"Ingrese el puntaje de la pelicula: ","Error, intente nuevamente[1-100]",1,100)==-1);
+                                break;
+                            case 6:
+                                while(getString(movie->linkImagen,"Ingrese el link de la imagen de la pelicula: ","Error, intente nuevamente",1,151)==-1);
+                                break;
+                            case 7:
+                                continuar='n';
+                                break;
+                        }
+                        fseek(auxPeliculas,-sizeof(EMovie),SEEK_CUR);
+                        fwrite(movie,sizeof(EMovie),1,auxPeliculas);
+                        printf("Pelicula modificada\n");
+                        retorno=0;
                     }
-                    fseek(auxPeliculas,-sizeof(EMovie),SEEK_CUR);
-                    fwrite(movie,sizeof(EMovie),1,auxPeliculas);
-                    printf("Pelicula modificada\n");
-                    retorno=0;
                 }
             }
         }
-    }
-    if(flagSearch==0)
-    {
-        printf("La pelicula no existe\n");
+        if(flagSearch==0)
+        {
+            printf("La pelicula no existe\n");
+        }
     }
     return retorno;
 }

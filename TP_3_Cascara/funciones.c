@@ -11,7 +11,6 @@
  * \return 0 si fue exitoso de lo contrario -1
  *
  */
-
 int cargarPeliculaEstructura(EMovie* movie)
 {
     int retorno=-1;
@@ -25,16 +24,13 @@ int cargarPeliculaEstructura(EMovie* movie)
         while(getString(movie->linkImagen,"Ingrese el link de la imagen de la pelicula: ","Error, intente nuevamente",1,151)==-1);
         movie->status=1;
         retorno=0;
-
     }
     else
     {
         printf("Error, No cargo la estructura\n");
     }
-
     return retorno;
 }
-
 
 /**
  *  \brief Agrega una pelicula al archivo binario
@@ -54,7 +50,7 @@ int agregarPelicula(EMovie * movie)
             return retorno;
         }
         fwrite(movie,sizeof(EMovie),1,peliculasArchivo);
-        if(fclose(peliculasArchivo)==-1)
+        if(fclose(peliculasArchivo)!=0)
         {
             printf("No se pudo cerrar el archivo\n");
         }
@@ -66,12 +62,10 @@ int agregarPelicula(EMovie * movie)
     }
     else
     {
-        printf("Error, No cargo la estructura\n");
+        printf("Error, No cargo el puntero\n");
     }
     return retorno;
 }
-
-
 
 /**
  *  Borra una pelicula del archivo binario
@@ -107,17 +101,19 @@ int borrarPelicula(EMovie * movie)
                     flagEncontrado=1;
                     retorno=0;
                 }
-
             }
         }
         if(flagEncontrado==0)
         {
             printf("La pelicula no existe\n");
         }
+        if(fclose(auxPeliculas)!=0)
+        {
+            printf("Hubo un error al cerrar los archivos\n");
+        }
     }
     return retorno;
 }
-
 
 /**
  *  Genera un archivo html a partir de las peliculas cargadas en el archivo binario.
@@ -176,7 +172,6 @@ void generarPagina(EMovie * movie,char nombre[])
                 fprintf(HTML,"<p>%s</p></article>",movie->descripcion);
             }
         }
-
         while (1)
         {
             ch = fgetc(parteDos);
@@ -200,8 +195,6 @@ void generarPagina(EMovie * movie,char nombre[])
     }
     return;
 }
-
-
 
 /** \brief funcion que permite modificar los datos de una pelicula
  *
@@ -267,6 +260,10 @@ int modificarPelicula(EMovie * movie)
                         retorno=0;
                     }
                 }
+            }
+            if(fclose(auxPeliculas)!=0)
+            {
+                printf("Hubo un error al cerrar los archivos\n");
             }
         }
         if(flagSearch==0)

@@ -204,6 +204,7 @@ void generarPagina(EMovie * movie,char nombre[])
  */
 int modificarPelicula(EMovie * movie)
 {
+    system("@cls||clear");
     int retorno=-1;
     int opcion;
     int flagSearch=0;
@@ -214,7 +215,7 @@ int modificarPelicula(EMovie * movie)
     {
         if((auxPeliculas = fopen("peliculasArchivo.dat","r+b"))==NULL)
         {
-            printf("El archivo no puede ser abierto");
+            printf("El archivo no se puede abrir");
             exit(1);
         }
         while(getString(auxSearchMovie,"Ingrese el titulo de la pelicula: ","Error, intente nuevamente",1,51)==-1);
@@ -261,14 +262,15 @@ int modificarPelicula(EMovie * movie)
                     }
                 }
             }
-            if(fclose(auxPeliculas)!=0)
-            {
-                printf("Hubo un error al cerrar los archivos\n");
-            }
+
         }
         if(flagSearch==0)
         {
             printf("La pelicula no existe\n");
+        }
+        if(fclose(auxPeliculas)!=0)
+        {
+            printf("Hubo un error al cerrar los archivos\n");
         }
     }
     return retorno;

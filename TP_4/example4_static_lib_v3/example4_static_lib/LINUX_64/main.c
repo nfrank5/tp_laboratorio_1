@@ -17,6 +17,7 @@ void printArrayListEmployee(ArrayList* lista)
 
 int main()
 {
+    int c;
      // Genero personas para usar en el ArrayList
     Employee* p0 = newEmployee(14, "JUAN1" ,"LOPEZ", 133.22,5);
     Employee* p1 = newEmployee(14, "JUAN2" ,"LOPEZ", 233.22,5);
@@ -144,7 +145,7 @@ int main()
     free(p3);
     lista->deleteArrayList(lista);
     lista2->deleteArrayList(lista2);
-
-    system("PAUSE");
+    while((c = getchar()) != '\n' && c != EOF); //mi linea
+    //system("PAUSE");
     return 0;
 }

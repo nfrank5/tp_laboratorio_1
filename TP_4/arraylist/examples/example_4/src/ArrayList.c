@@ -70,6 +70,10 @@ ArrayList* al_newArrayList(void)
 int al_add(ArrayList* pList,void* pElement)
 {
     int returnAux = -1;
+    if(pList!=NULL&&pElement!=NULL)
+    {
+        returnAux=0;
+    }
 
     return returnAux;
 }

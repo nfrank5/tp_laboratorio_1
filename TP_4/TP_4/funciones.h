@@ -1,7 +1,6 @@
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
 
-
 typedef struct{
     char title[51];
     char nationality[51];
@@ -24,7 +23,8 @@ int modifyMovie(ArrayList* movies,E_Movie* oneMovie);
 int addMoviesToFile(ArrayList* lista, E_Movie* oneMovie, ArrayList* sublistMovies);
 E_Movie* hardCodeMovie(char title[51],char country[51],int year, char director[51], int id);
 int ManageFavoriteMovies(ArrayList* movies, E_Movie* oneMovie, ArrayList* sublistMovies);
-
+int addFavorite(ArrayList* movies, E_Movie* oneMovie,ArrayList* sublistMovies);
+int replaceFavorite(ArrayList* movies, E_Movie* oneMovie,ArrayList* sublistMovies);
 
 
 #endif // FUNCIONES_H_INCLUDED

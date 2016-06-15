@@ -27,17 +27,17 @@ E_Movie* newMovie(void)
 }
 
 
-/** \brief Funcion para determinar mayor o menor estructura de acuerdo al año
+/** \brief Funcion para determinar si es mayor o menor  una estructura de acuerdo al año
  *
  * \param puntero a un elemento E_movie
  * \param puntero a otro elemento E_movie
- * \return devuelve 1 si pMovieA es mayor y -1 si pMovieB es mayor y o si hubo un error o las peliculas sondel mismo año
+ * \return devuelve 1 si pMovieA es mayor y -1 si pMovieB es mayor y 0 si hubo un error o las peliculas son del mismo año
  *
  */
 int compareMovie(void* pMovieA,void* pMovieB)
 {
     int retorno = 0;
-    if(pMovieA!=NULL&&pMovieB!=NULL)
+    if(pMovieA!=NULL&&pMovieB!=NULL) //si los punteros son nulos retorna cero y la funcion sort no ordena nada
     {
         if(((E_Movie*)pMovieA)->year > ((E_Movie*)pMovieB)->year)
         {
@@ -114,7 +114,13 @@ E_Movie* findId(ArrayList* lista)
     return retorno;
 }
 
-
+/** \brief Carga el ID de una pelicula en un auxiliar verificando que el ID no se repita con otros que existen en la estructura
+ *
+ * \param puntero del arraylist
+ * \param puntero a una estructura E_Movie
+ * \return -1 si hubo un error o si el ID esta repetido y 0 si no esta repetido
+ *
+ */
 int setMovieId(ArrayList* lista, E_Movie* oneMovie)
 {
     int returnAux = -1;
@@ -128,19 +134,26 @@ int setMovieId(ArrayList* lista, E_Movie* oneMovie)
             auxMovie=lista->get(lista,i);
             if(auxMovie->id==idAux)
             {
-                return returnAux;
+                return returnAux; // devuelve -1 si esta repetida
             }
         }
     }
     if(oneMovie!= NULL)
     {
-        oneMovie->id = idAux;
+        oneMovie->id = idAux; // seteo el ID de la pelicula
         returnAux = 0;
     }
     return returnAux;
 }
 
 
+
+/** \brief Carga el año de una pelicula en un auxiliar
+ *
+ * \param el puntero al auxiliar de E_Movie
+ * \return -1 si hubo un error y 0 si la carga fue exitosa
+ *
+ */
 int setMovieYear(E_Movie* oneMovie)
 {
     int returnAux = -1;
@@ -154,7 +167,12 @@ int setMovieYear(E_Movie* oneMovie)
     return returnAux;
 }
 
-
+/** \brief Carga el titulo de una pelicula en un auxiliar
+ *
+ * \param el puntero al auxiliar de E_Movie
+ * \return -1 si hubo un error y 0 si la carga fue exitosa
+ *
+ */
 int setMovieTitle(E_Movie* oneMovie)
 {
     int returnAux = -1;
@@ -168,8 +186,12 @@ int setMovieTitle(E_Movie* oneMovie)
     return returnAux;
 }
 
-
-
+/** \brief Carga el pais de origen de una pelicula en un auxiliar
+ *
+ * \param el puntero al auxiliar de E_Movie
+ * \return -1 si hubo un error y 0 si la carga fue exitosa
+ *
+ */
 int setMovieNationality(E_Movie* oneMovie)
 {
     int returnAux = -1;
@@ -183,7 +205,12 @@ int setMovieNationality(E_Movie* oneMovie)
     return returnAux;
 }
 
-
+/** \brief Carga el director de una pelicula en un auxiliar
+ *
+ * \param el puntero al auxiliar de E_Movie
+ * \return -1 si hubo un error y 0 si la carga fue exitosa
+ *
+ */
 int setMovieDirector(E_Movie* oneMovie)
 {
     int returnAux = -1;
@@ -197,11 +224,11 @@ int setMovieDirector(E_Movie* oneMovie)
     return returnAux;
 }
 
-/** \brief
+/** \brief mediante un menu permite hacer modificaciones en una elemento del arraylist
  *
- * \param
- * \param
- * \return
+ * \param el puntero al array list
+ * \param una estructura E_Movie auxiliar
+ * \return -1 si hubo un error y 0 si la modificacion fue exitosa
  *
  */
 int modifyMovie(ArrayList* movies, E_Movie* oneMovie)
@@ -217,16 +244,28 @@ int modifyMovie(ArrayList* movies, E_Movie* oneMovie)
             switch(modifyMenuOption)
             {
                 case 1:
-                    setMovieDirector(oneMovie);
+                    if(setMovieDirector(oneMovie)!=0)
+                    {
+                        return returnAux;
+                    }
                     break;
                 case 2:
-                    setMovieYear(oneMovie);
+                    if(setMovieYear(oneMovie)!=0)
+                    {
+                        return returnAux;
+                    }
                     break;
                 case 3:
-                    setMovieNationality(oneMovie);
+                    if(setMovieNationality(oneMovie)!=0)
+                    {
+                        return returnAux;
+                    }
                     break;
                 case 4:
-                    setMovieTitle(oneMovie);
+                    if(setMovieTitle(oneMovie)!=0)
+                    {
+                        return returnAux;
+                    }
                     break;
                 case 5:
                     seguir = 'n';
@@ -242,7 +281,9 @@ int modifyMovie(ArrayList* movies, E_Movie* oneMovie)
 
 /**
  *  \brief Agrega una pelicula a un archivo de texto
- *  \param movie la estructura a ser agregada al archivo
+ *  \param arraylist de las peliculas
+ *  \param E_Movie auxiliar
+ *  \param arraylist de favoritas
  *  \return retorna -1 o 0 de acuerdo a si pudo agregar la pelicula o no
  */
 int addMoviesToFile(ArrayList* lista, E_Movie* oneMovie, ArrayList* sublistMovies)
@@ -289,15 +330,14 @@ int addMoviesToFile(ArrayList* lista, E_Movie* oneMovie, ArrayList* sublistMovie
     return retorno;
 }
 
-/** \brief Set this employee the values recived as parameters
+/** \brief carga los datos harcodeados a un arraylist
  *
- * \param pEmployee employee*
+ * \param title[] char
+ * \param country[] char
+ * \param year int
+ * \param director[] char
  * \param id int
- * \param name[] char
- * \param lastName[] char
- * \param salary float
- * \param sector int
- * \return int Return (-1) if Error [NULL pointer] - (0) if Ok
+ * \return int Return if Error [NULL pointer] -  if Ok el puntero para
  *
  */
 E_Movie* hardCodeMovie(char title[51],char country[51],int year, char director[51], int id)
@@ -320,18 +360,18 @@ E_Movie* hardCodeMovie(char title[51],char country[51],int year, char director[5
 
 }
 
-/** \brief
+/** \brief submenu para manejar las opciones de favoritos
  *
- * \param
- * \param
- * \return
+ * \param arraylist de peliculas
+ * \param E_Movie Auxiliar
+ * \return arraylist de favoritos
  *
  */
 int ManageFavoriteMovies(ArrayList* movies, E_Movie* oneMovie,ArrayList* sublistMovies)
 {
     int retorno = -1;
     char seguir = 's';
-    int manageMenuOption,i;
+    int manageMenuOption;
     if(movies!=NULL&&oneMovie!=NULL&&sublistMovies!=NULL)
     {
         while(seguir=='s')
@@ -341,77 +381,21 @@ int ManageFavoriteMovies(ArrayList* movies, E_Movie* oneMovie,ArrayList* sublist
             {
                 case 1:
                     system("@cls||clear");
-                    oneMovie = findId(movies); // Busco la pelicula por ID y la asigno a oneMovie
-                    if(oneMovie!=NULL) // si la funcion findId no encuentre el ID devuelve un puntero NULL
-                    {
-                        while(getInt(&i,"Ingrese el puesto en el que quiere ingresar la pelicula: ","Error, intente nuevamente[1-3]\n",1,3)==-1);
-                        if(i>sublistMovies->len(sublistMovies)+1)
-                        {
-                            printf("No hay suficientes peliculas para ese puesto\n"); //el indice es superior a la cantidad de peliculas favoritas
-                        }
-                        else
-                        {
-                            //auxMovie = movies->get(movies,movies->indexOf(movies,oneMovie));
-                            if(sublistMovies->contains(sublistMovies,oneMovie)==0) //contains retorna cero si no se encontro el elemento
-                            {
-                                sublistMovies->push(sublistMovies,i-1,oneMovie); //la primera pelicula pasa al segundo puesto
-                                printf("Pelicula cargada a favoritos\n");
-                            }
-                            else
-                            {
-                                printf("Ya existe esa pelicula en favoritos");
-                            }
-                            if(sublistMovies->len(sublistMovies)>3)
-                            {
-                                printf("Se elimino del top 3 a: \n");
-                                oneMovie = sublistMovies->pop(sublistMovies,3); //semuestra i elimina la pelicula que cae del tercer puesto
-                                printEMovie(oneMovie);
-                            }
-                        }
-                    }
+                    addFavorite(movies,oneMovie,sublistMovies); //Hay que ingresar primero la pelicula en el puesto uno luego dos y luego tres en orden
                     break;
                 case 2:
                     system("@cls||clear");
-                    if(sublistMovies->isEmpty(sublistMovies)==0)
-                    {
-                        oneMovie = findId(movies); // Busco la pelicula por ID y la asigno a oneMovie
-                        if(oneMovie!=NULL) // si la funcion findId no encuentre el ID devuelve un puntero NULL y si el sublist esta vacio no se puede reemplazar nada
-                        {
-                            while(getInt(&i,"Ingrese el puesto de la pelicula que quiere reemplazar: ","Error, intente nuevamente[1-3]\n",1,3)==-1);
-                            if(i>sublistMovies->len(sublistMovies)+1)
-                            {
-                                printf("No hay suficientes peliculas para reemplazar ese puesto\n"); //el indice es superior a la cantidad de peliculas favoritas
-                            }
-                            else
-                            {
-                                //auxMovie = movies->get(movies,movies->indexOf(movies,oneMovie));
-                                if(sublistMovies->contains(sublistMovies,oneMovie)==0)
-                                {
-                                    sublistMovies->set(sublistMovies,i-1,oneMovie); //la primera pelicula pasa al segundo puesto
-                                    printf("Se reemplazo la pelicula\n");
-                                }
-                                else
-                                {
-                                    printf("La pelicula ya esta en favoritos\n");
-                                }
-                            }
-
-                        }
-                        else
-                        {
-                            printf("Error, no es encontro el ID\n");
-                        }
-                    }
-                    else
-                    {
-                        printf("No hay peliculas favoritas para reemplazar\n");
-                    }
+                    replaceFavorite(movies,oneMovie,sublistMovies); //No se reemplazar si no existe una pelicula antes en ese puesto
                     break;
                 case 3:
                     system("@cls||clear");
-                    if(sublistMovies->isEmpty(sublistMovies)==0)
+                    if(sublistMovies->isEmpty(sublistMovies)==0) //No se puede imprimir si no hay altas
                     {
                         printArrayListMovie(sublistMovies);
+                    }
+                    else
+                    {
+                        printf("No hay favoritas para imprimir\n");
                     }
                     break;
                 case 4:
@@ -426,3 +410,98 @@ int ManageFavoriteMovies(ArrayList* movies, E_Movie* oneMovie,ArrayList* sublist
 }
 
 
+/** \brief  agrega una pelicula a favoritos
+ *
+ * \param arraylist de E_Movie
+ * \param un auxiliar de E_Movie
+ * \param  un arraylist de favoritos de E_Movie
+ * \return -1 si hay un error 0 si carga Ok
+ *
+ */
+int addFavorite(ArrayList* movies, E_Movie* oneMovie,ArrayList* sublistMovies)
+{
+    int retorno=-1;
+    int i;
+    oneMovie = findId(movies); // Busco la pelicula por ID y la asigno a oneMovie
+    if(oneMovie!=NULL) // si la funcion findId no encuentre el ID devuelve un puntero NULL
+    {
+        while(getInt(&i,"Ingrese el puesto en el que quiere ingresar la pelicula: ","Error, intente nuevamente[1-3]\n",1,3)==-1);
+        if(i>sublistMovies->len(sublistMovies)+1)
+        {
+            printf("No hay suficientes peliculas para ese puesto\n"); //el indice es superior a la cantidad de peliculas favoritas
+        }
+        else
+        {
+            //auxMovie = movies->get(movies,movies->indexOf(movies,oneMovie));
+            if(sublistMovies->contains(sublistMovies,oneMovie)==0) //contains retorna cero si no se encontro el elemento
+            {
+                sublistMovies->push(sublistMovies,i-1,oneMovie); //la primera pelicula pasa al segundo puesto
+                printf("Pelicula cargada con exito a favoritos\n");
+            }
+            else
+            {
+                printf("Error, Ya existe esa pelicula en favoritos");
+            }
+            if(sublistMovies->len(sublistMovies)>3)
+            {
+                printf("Se elimino del top 3 a: \n");
+                oneMovie = sublistMovies->pop(sublistMovies,3); //se muestra y elimina la pelicula que cae del tercer puesto
+                printEMovie(oneMovie);
+            }
+        }
+        retorno=0;
+    }
+    return retorno;
+}
+
+
+/** \brief  reemplaza una pelicula de favoritos
+ *
+ * \param arraylist de E_Movie
+ * \param un auxiliar de E_Movie
+ * \param  un arraylist de favoritos de E_Movie
+ * \return -1 si hay un error 0 si carga Ok
+ *
+ */
+int replaceFavorite(ArrayList* movies, E_Movie* oneMovie,ArrayList* sublistMovies)
+{
+    int auxretorno=-1;
+    int i;
+    if(sublistMovies->isEmpty(sublistMovies)==0)
+    {
+        oneMovie = findId(movies); // Busco la pelicula por ID y la asigno a oneMovie
+        if(oneMovie!=NULL) // si la funcion findId no encuentre el ID devuelve un puntero NULL y si el sublist esta vacio no se puede reemplazar nada
+        {
+            while(getInt(&i,"Ingrese el puesto de la pelicula que quiere reemplazar: ","Error, intente nuevamente[1-3]\n",1,3)==-1);
+            if(i>sublistMovies->len(sublistMovies)+1)
+            {
+                printf("No hay suficientes peliculas para reemplazar ese puesto\n"); //el indice es superior a la cantidad de peliculas favoritas
+            }
+            else
+            {
+                //auxMovie = movies->get(movies,movies->indexOf(movies,oneMovie));
+                if(sublistMovies->contains(sublistMovies,oneMovie)==0)
+                {
+                    sublistMovies->set(sublistMovies,i-1,oneMovie); //la primera pelicula pasa al segundo puesto
+                    printf("Se reemplazo la pelicula\n");
+                    auxretorno = 0;
+                }
+                else
+                {
+                    printf("La pelicula ya esta en favoritos\n");
+                }
+            }
+
+        }
+        else
+        {
+            printf("Error, no es encontro el ID\n");
+        }
+    }
+    else
+    {
+        printf("No hay peliculas favoritas para reemplazar\n");
+    }
+    return auxretorno;
+
+}

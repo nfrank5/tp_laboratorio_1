@@ -35,45 +35,53 @@ int main()
                 system("@cls||clear");
                 if((oneMovie=newMovie())!=NULL)
                 {
-                   if(setMovieId(movies, oneMovie)!=0)
-                   {
+                    if(setMovieId(movies, oneMovie)!=0)
+                    {
                         printf("ID repetida\n");
-                        free(oneMovie);
                         break;
-                   }
-                    setMovieDirector(oneMovie);
-                    setMovieNationality(oneMovie);
-                    setMovieTitle(oneMovie);
-                    setMovieYear(oneMovie);
-                    movies->add(movies,oneMovie);
+                    }
+                    if(setMovieDirector(oneMovie)!=0) printf("Error carga Director");
+                    if(setMovieNationality(oneMovie)!=0) printf("Error carga nacionalidad");
+                    if(setMovieTitle(oneMovie)!=0) printf("Error carga titulo");
+                    if(setMovieYear(oneMovie)!=0) printf("Error carga año");
+                    if(movies->add(movies,oneMovie)!=0) printf("Error carga en arraylist");
                 }
                 break;
             case 2:
                 system("@cls||clear");
-                if(movies->isEmpty(movies)==0)
+                if(movies->isEmpty(movies)==0)  //Si no esta vacio
                 {
                     oneMovie = findId(movies);
                     if(oneMovie!=NULL) // si la funcion findId no encuentre el ID devuelve un puntero NULL
                     {
-                        modifyMovie(movies,oneMovie);
+                        if(modifyMovie(movies,oneMovie)!=0)
+                        {
+                            printf("Hubo un error en la modificacion");
+                        }
                     }
                 }
                 else
                 {
-                    printf("No hay peliculas cargadas");
+                    printf("No hay peliculas cargadas\n");
                 }
                 break;
             case 3:
                 system("@cls||clear");
-                if(movies->isEmpty(movies)==0)
+                if(movies->isEmpty(movies)==0) //Si no esta vacio
                 {
                     oneMovie = findId(movies);
-                    if(oneMovie!=NULL) // si la funcion findId no encuentre el ID devuelve un puntero NULL
+                    if(oneMovie!=NULL) // si la funcion findId no encuentre el ID devuelve un puntero NULL aca se verifica
                     {
+                        printf("Pelicula eliminada: ");
+                        printEMovie(oneMovie);
                         movies->remove(movies,movies->indexOf(movies,oneMovie));
+
                     }
                 }
-
+                else
+                {
+                    printf("No hay peliculas cargadas\n");
+                }
                 break;
             case 4:
                 system("@cls||clear");
@@ -83,7 +91,7 @@ int main()
                 }
                 else
                 {
-                    printf("No hay peliculas cargadas");
+                    printf("No hay peliculas cargadas\n");
                 }
                 break;
             case 5:
@@ -104,16 +112,24 @@ int main()
                 break;
             case 6:
                 system("@cls||clear");
-                if(movies->isEmpty(movies)==0)
+                if(movies->isEmpty(movies)==0)  //Si no esta vacio
                 {
                     addMoviesToFile(movies, oneMovie,sublistMovies);
+                }
+                else
+                {
+                    printf("No hay peliculas cargadas\n");
                 }
                 break;
             case 7:
                 system("@cls||clear");
-                if(movies->isEmpty(movies)==0)
+                if(movies->isEmpty(movies)==0)  //Si no esta vacio
                 {
                     ManageFavoriteMovies(movies,oneMovie,sublistMovies);
+                }
+                else
+                {
+                    printf("No hay peliculas cargadas\n");
                 }
                 break;
             case 8:

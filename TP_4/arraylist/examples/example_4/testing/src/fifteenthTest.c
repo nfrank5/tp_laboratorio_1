@@ -89,7 +89,7 @@ void fifteenthTestCase02(void)
         list->add(list,pAux[i]);
     }
 
-    pSubList = list->subList(list,0,4);
+    pSubList = list->subList(list,0,5);
     utest_assertNotNullMsg(pSubList ,"Error in return value of <subList> if ok the correct value is not NULL");
 
     for(i=0; i < LENGTH; i++)

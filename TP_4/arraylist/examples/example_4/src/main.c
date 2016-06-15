@@ -46,8 +46,8 @@ int main(void)
 {
 
     #ifdef TEST
-        startTesting(1);
-        startTesting(2);
+        //startTesting(1);
+        //startTesting(2);
         //startTesting(3);
         //startTesting(4);
         //startTesting(5);
@@ -60,7 +60,7 @@ int main(void)
         //startTesting(12);
         //startTesting(13);
         //startTesting(14);
-        //startTesting(15);
+        startTesting(15);
         //startTesting(16);
         //startTesting(17);
     #else

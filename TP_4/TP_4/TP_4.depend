@@ -1,0 +1,47 @@
+# depslib dependency file v1.0
+1465930777 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/main.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"funciones.h"
+	"utn.h"
+
+1465669162 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/ArrayList.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1464361603 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/ArrayList.h
+
+1464469288 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/person.c
+
+1464469381 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/person.h
+
+1463414159 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/utn.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	<ctype.h>
+
+1465964335 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/funciones.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+	"utn.h"
+	"funciones.h"
+	<string.h>
+
+1462385713 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/utn.h
+
+1465930767 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/funciones.h
+
+1463604777 source:/home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/Employee.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Employee.h"
+
+1463604777 /home/nico/programacion/01_utn/01_cuatrimestre/programacion/workspace/trabajos_practicos/TP_4/TP_4/Employee.h
+

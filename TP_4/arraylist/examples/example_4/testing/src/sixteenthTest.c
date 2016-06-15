@@ -87,7 +87,7 @@ void sixteenthTestCase02(void)
         pOtherList->add(pOtherList,pAux[i]);
     }
 
-    pOtherList->remove(pOtherList,0);
+    list->remove(list,0);
 
     r = list->containsAll(list,pOtherList);
     utest_assertEqualsIntMsg(r, 0 ,"Error in return value of <containsAll> if the list is not contained the correct value is 0");

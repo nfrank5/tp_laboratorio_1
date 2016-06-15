@@ -61,8 +61,8 @@ void eleventhTestCase01(void)
 
     pAuxToPush = newEmployee(id[5],unsortedList[5],unsortedList[5],salary[5],sector[5]);
 
-    r = list->set(list,i,pAuxToPush);
-    utest_assertEqualsIntMsg(r,0,"Error in return value <set> if ok the correct value to return is 0");
+    r = list->push(list,i-1,pAuxToPush);
+    utest_assertEqualsIntMsg(r,0,"Error in return value <push> if ok the correct value to return is 0");
 
 
     free(list);

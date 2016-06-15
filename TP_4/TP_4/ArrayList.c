@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../inc/ArrayList.h"
+#include "ArrayList.h"
 
 
 // funciones privadas
@@ -384,15 +384,19 @@ ArrayList* al_subList(ArrayList* pList,int from,int to)
             returnAux=al_newArrayList();
             if(returnAux!=NULL)
             {
-                for(i=from;i<=to;i++) // es correcto solo menor no menor igual
+                for(i=from;i<to;i++)
                 {
                     {
                         returnAux->add(returnAux,returnAux->get(pList,i));
                     }
                 }
             }
+
         }
+
     }
+
+
     return returnAux ;
 }
 

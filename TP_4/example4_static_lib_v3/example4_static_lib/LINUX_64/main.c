@@ -70,11 +70,11 @@ int main()
     printArrayListEmployee(lista2);
 
     lista2->sort(lista2, compareEmployee,1);
-    printf("Lista Clonada Ordenada por Edad (UP):%p\r\n",lista2);
+    printf("Lista Clonada Ordenada por Salario (UP):%p\r\n",lista2);
     printArrayListEmployee(lista2);
 
     lista2->sort(lista2, compareEmployee,0);
-    printf("Lista Clonada Ordenada por Edad (DOWN):%p\r\n",lista2);
+    printf("Lista Clonada Ordenada por Salario (DOWN):%p\r\n",lista2);
     printArrayListEmployee(lista);
 
     printf("\r\nlista clonada contiene lista?:");
